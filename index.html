@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ashok Furniture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/917518909344" target="_blank" class="whatsapp-float">
+  💬
+</a>
+
+
+<body>
+
+ <header class="site-header">
+  <div class="header-content">
+    <img src="logo.png" alt="Ashok Interior & Construction" class="logo">
+
+    <div class="brand-text">
+      <h1>Ashok Furniture</h1>
+      <p>Quality Furniture for Your Home</p>
+    </div>
+  </div>
+</header>
+
+  <section class="products">
+<!-- CONTACT SECTION -->
+<section class="contact">
+  <h2>Contact Us</h2>
+  <p><strong>Phone:</strong> 7518909344</p>
+  <p><strong>Email:</strong> vivek2088888@gmail.com</p>
+  <p><strong>Address:</strong> Ashok Interior & Construction, India</p>
+
+  <a href="https://wa.me/917518909344" target="_blank" class="contact-btn">
+    Contact on WhatsApp
+  </a>
+</section>
+
+
+    <div class="product">
+      <h3>Wooden Bed</h3>
+      <p>Price: ₹15,000</p>
+      <button onclick="bookNow('Wooden Bed')">Book Now</button>
+    </div>
+
+    <div class="product">
+      <h3>Sofa Set</h3>
+      <p>Price: ₹22,000</p>
+      <button onclick="bookNow('Sofa Set')">Book Now</button>
+    </div>
+
+    <div class="product">
+  <h3>Home Interior</h3>
+  <p>Complete Home Interior Solutions</p>
+  <button onclick="bookNow('Home Interior')">Book Now</button>
+</div>
+
+
+  </section>
+
+  <!-- ORDER FORM -->
+  <div id="orderForm" style="display:none; max-width:400px; margin:30px auto; padding:20px; background:#fff; border-radius:8px;">
+    <h2>Book Your Furniture</h2>
+
+    <p><strong>Selected Product:</strong> <span id="selectedProduct"></span></p>
+
+    <input type="text" id="name" placeholder="Your Name" style="width:100%; padding:8px; margin:5px 0;">
+    <input type="text" id="phone" placeholder="Mobile Number" style="width:100%; padding:8px; margin:5px 0;">
+    <textarea id="address" placeholder="Delivery Address" style="width:100%; padding:8px; margin:5px 0;"></textarea>
+
+    <button onclick="submitOrder()" style="margin-top:10px;">Submit Order</button>
+  </div>
+
+  <!-- JavaScript (ONLY ONCE) -->
+  <script>
+    let currentProduct = "";
+
+    function bookNow(productName) {
+      currentProduct = productName;
+      document.getElementById("selectedProduct").innerText = productName;
+      document.getElementById("orderForm").style.display = "block";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function submitOrder() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+
+      if (name === "" || phone === "" || address === "") {
+        alert("Please fill all details");
+        return;
+      }
+
+      const message =
+        "New Furniture Order%0A%0A" +
+        "Product: " + currentProduct + "%0A" +
+        "Name: " + name + "%0A" +
+        "Phone: " + phone + "%0A" +
+        "Address: " + address;
+
+      const whatsappNumber = "917518909344";
+      const whatsappURL =
+        "https://wa.me/" + whatsappNumber + "?text=" + message;
+
+      // Open WhatsApp
+      window.open(whatsappURL, "_blank");
+
+      // Delayed redirect to Thank You page
+      setTimeout(function () {
+        window.location.href = "thankyou.html";
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
