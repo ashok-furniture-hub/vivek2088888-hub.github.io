@@ -1,117 +1,516 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Ashok Furniture</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description"
+    content="Ashok Interior & Construction - Quality Furniture and Home Interior Solutions & for home products you">
+  <title>Ashok Furniture – Quality Furniture for Your Home</title>
   <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 </head>
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/917518909344" target="_blank" class="whatsapp-float">
-  💬
-</a>
+<!-- ===== TOP HEADER ===== -->
+<header class="main-header">
+
+  <div class="header-left">
+    <img src="logo.png" class="logo" alt="Ashok Logo">
+  </div>
+
+  <div class="header-center">
+    <input type="text" placeholder="Search Furniture, Interior, Modular Kitchen..." class="search-bar">
+  </div>
+
+  <div class="header-right">
+    <div class="header-item">👤 Login</div>
+    <div class="header-item">📞 Contact</div>
+    <div class="header-item">🛒 Cart</div>
+    <div class="header-item location" onclick="getLocation()">
+      <i class="fa-solid fa-location-dot"></i>
+      <span id="locationText">Set Location</span>
+    </div>
+  </div>
+
+</header>
+
+
 
 
 <body>
-
- <header class="site-header">
-  <div class="header-content">
-    <img src="logo.png" alt="Ashok Interior & Construction" class="logo">
-
-    <div class="brand-text">
-      <h1>Ashok Furniture</h1>
-      <p>Quality Furniture for Your Home</p>
-    </div>
-  </div>
-</header>
-
-  <section class="products">
-<!-- CONTACT SECTION -->
-<section class="contact">
-  <h2>Contact Us</h2>
-  <p><strong>Phone:</strong> 7518909344</p>
-  <p><strong>Email:</strong> vivek2088888@gmail.com</p>
-  <p><strong>Address:</strong> Ashok Interior & Construction, India</p>
-
-  <a href="https://wa.me/917518909344" target="_blank" class="contact-btn">
-    Contact on WhatsApp
-  </a>
-</section>
-
-
-    <div class="product">
-      <h3>Wooden Bed</h3>
-      <p>Price: ₹15,000</p>
-      <button onclick="bookNow('Wooden Bed')">Book Now</button>
-    </div>
-
-    <div class="product">
-      <h3>Sofa Set</h3>
-      <p>Price: ₹22,000</p>
-      <button onclick="bookNow('Sofa Set')">Book Now</button>
-    </div>
-
-    <div class="product">
-  <h3>Home Interior</h3>
-  <p>Complete Home Interior Solutions</p>
-  <button onclick="bookNow('Home Interior')">Book Now</button>
-</div>
-
-
-  </section>
-
-  <!-- ORDER FORM -->
-  <div id="orderForm" style="display:none; max-width:400px; margin:30px auto; padding:20px; background:#fff; border-radius:8px;">
-    <h2>Book Your Furniture</h2>
-
-    <p><strong>Selected Product:</strong> <span id="selectedProduct"></span></p>
-
-    <input type="text" id="name" placeholder="Your Name" style="width:100%; padding:8px; margin:5px 0;">
-    <input type="text" id="phone" placeholder="Mobile Number" style="width:100%; padding:8px; margin:5px 0;">
-    <textarea id="address" placeholder="Delivery Address" style="width:100%; padding:8px; margin:5px 0;"></textarea>
-
-    <button onclick="submitOrder()" style="margin-top:10px;">Submit Order</button>
-  </div>
-
-  <!-- JavaScript (ONLY ONCE) -->
   <script>
-    let currentProduct = "";
-
-    function bookNow(productName) {
-      currentProduct = productName;
-      document.getElementById("selectedProduct").innerText = productName;
-      document.getElementById("orderForm").style.display = "block";
-      window.scrollTo(0, document.body.scrollHeight);
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
     }
 
-    function submitOrder() {
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const address = document.getElementById("address").value;
+    function showPosition(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
 
-      if (name === "" || phone === "" || address === "") {
-        alert("Please fill all details");
-        return;
-      }
+      // OpenStreetMap API se city name la rahe
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(response => response.json())
+        .then(data => {
+          const city = data.address.city || data.address.town || data.address.village;
+          document.getElementById("locationText").innerText = city;
+        });
+    }
 
-      const message =
-        "New Furniture Order%0A%0A" +
-        "Product: " + currentProduct + "%0A" +
-        "Name: " + name + "%0A" +
-        "Phone: " + phone + "%0A" +
-        "Address: " + address;
-
-      const whatsappNumber = "917518909344";
-      const whatsappURL =
-        "https://wa.me/" + whatsappNumber + "?text=" + message;
-
-      // Open WhatsApp
-      window.open(whatsappURL, "_blank");
-
-      // Delayed redirect to Thank You page
-      setTimeout(function () {
-        window.location.href = "thankyou.html";
-      }, 1000);
+    function showError(error) {
+      alert("Location access denied.");
     }
   </script>
 
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/917518909344," target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" width="28" height="28">
+      <path
+        d="M16 0C7.164 0 0 7.163 0 16c0 2.82.737 5.47 2.027 7.77L0 32l8.456-2.007A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.77-1.849l-.487-.288-5.02 1.193 1.234-4.884-.32-.504A13.24 13.24 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.907c-.4-.2-2.36-1.163-2.726-1.296-.366-.133-.633-.2-.9.2-.266.4-1.033 1.296-1.266 1.562-.233.267-.466.3-.866.1-.4-.2-1.688-.622-3.216-1.983-1.189-1.06-1.99-2.368-2.224-2.768-.233-.4-.025-.616.175-.815.18-.178.4-.467.6-.7.2-.234.266-.4.4-.667.133-.267.066-.5-.033-.7-.1-.2-.9-2.162-1.233-2.962-.325-.78-.655-.674-.9-.686l-.767-.013c-.266 0-.7.1-1.066.5-.366.4-1.4 1.368-1.4 3.33 0 1.963 1.433 3.862 1.633 4.13.2.267 2.82 4.305 6.83 6.034.954.412 1.7.658 2.28.842.958.305 1.83.262 2.52.159.768-.114 2.36-.965 2.693-1.897.333-.933.333-1.733.233-1.897-.1-.163-.366-.263-.766-.463z" />
+    </svg>
+  </a>
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">✦ Trusted Furniture Brand</span>
+      <h2>Beautiful Furniture<br>for Beautiful Homes</h2>
+      <p>Handcrafted quality furniture & complete home interior solutions.<br>Delivered to your door across India.</p>
+      <a href="#products" class="hero-btn">Explore Products</a>
+    </div>
+  </section>
+  <div class="hero-3d-slider">
+
+    <div class="slider-track">
+      <img src="kitchen.jpg" alt="Kitchen">
+      <img src="bedroom.jpg" alt="Bedroom">
+      <img src="living.jpg" alt="Living Room">
+
+    </div>
+    <div class="main-layout">
+
+      <!-- LEFT CATEGORY SIDEBAR -->
+      <aside class="category-sidebar">
+
+        <h3 class="sidebar-title">Categories</h3>
+
+        <div class="sidebar-category">
+          <img src="kitchen.jpg" alt="Kitchen">
+          <span>Modular Kitchen</span>
+        </div>
+
+        <div class="sidebar-category">
+          <img src="bedroom.jpg" alt="Bedroom">
+          <span>Bedroom Interior</span>
+        </div>
+
+        <div class="sidebar-category">
+          <img src="living.jpg" alt="Living">
+          <span>Living Room</span>
+        </div>
+
+      </aside>
+      <section class="hero">
+
+        <!-- Running Background Images -->
+        <div class="hero-bg-slider">
+          <img src="kitchen.jpg">
+          <img src="bedroom.jpg">
+          <img src="living.jpg">
+
+          <!-- duplicate for smooth loop -->
+          <img src="kitchen.jpg">
+          <img src="bedroom.jpg">
+          <img src="living.jpg">
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+          <span class="hero-badge">Trusted Furniture Brand</span>
+          <h2>Beautiful Furniture<br>for Beautiful Homes</h2>
+          <p>Handcrafted quality furniture & interior solutions.</p>
+          <a href="#" class="hero-btn">Explore Products</a>
+        </div>
+
+      </section>
+
+
+      <!-- RIGHT MAIN CONTENT -->
+      <div class="content-area">
+        <!-- Yaha tumhara hero / products / etc aayega -->
+      </div>
+
+    </div>
+
+
+    <!-- ===== FEATURES STRIP ===== -->
+    <div class="features-strip">
+      <div class="feature-item">🚚 <span>Free Delivery</span></div>
+      <div class="feature-item">🔨 <span>Expert Installation</span></div>
+      <div class="feature-item">⭐ <span>Premium Quality</span></div>
+      <div class="feature-item">💬 <span>24/7 Support</span></div>
+      <aside class="category"></aside>
+    </div>
+
+
+
+    <!-- ===== PRODUCTS SECTION ===== -->
+    <section class="products-section" id="products">
+      <div class="section-header">
+        <h2>Our Products</h2>
+        <p>Choose from our wide range of quality furniture</p>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card">
+          <div class="product-icon">🛏️</div>
+          <div class="product-info">
+            <h3>Wooden Bed</h3>
+            <p class="product-desc">Solid wood construction, premium finish, available in King & Queen size</p>
+            <div class="product-price">
+              <span class="price">₹15,000</span>
+              <span class="price-note">onwards</span>
+            </div>
+            <button class="book-btn" onclick="openOrderForm('Wooden Bed', '₹15,000')">
+              🛒 Book Now
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">🛋️</div>
+          <div class="product-info">
+            <h3>Sofa Set</h3>
+            <p class="product-desc">Comfortable 3+1+1 seating, premium fabric & leather options available</p>
+            <div class="product-price">
+              <span class="price">₹22,000</span>
+              <span class="price-note">onwards</span>
+            </div>
+            <button class="book-btn" onclick="openOrderForm('Sofa Set', '₹22,000')">
+              🛒 Book Now
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">🪑</div>
+          <div class="product-info">
+            <h3>Dining Table Set</h3>
+            <p class="product-desc">4 & 6 seater options, solid wood with cushioned chairs</p>
+            <div class="product-price">
+              <span class="price">₹18,000</span>
+              <span class="price-note">onwards</span>
+            </div>
+            <button class="book-btn" onclick="openOrderForm('Dining Table Set', '₹18,000')">
+              🛒 Book Now
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">🪟</div>
+          <div class="product-info">
+            <h3>Wardrobe / Almirah</h3>
+            <p class="product-desc">Custom-built wardrobes with mirror, drawers & sliding doors</p>
+            <div class="product-price">
+              <span class="price">₹20,000</span>
+              <span class="price-note">onwards</span>
+            </div>
+            <button class="book-btn" onclick="openOrderForm('Wardrobe / Almirah', '₹20,000')">
+              🛒 Book Now
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">📺</div>
+          <div class="product-info">
+            <h3>TV Unit / Cabinet</h3>
+            <p class="product-desc">Modern TV units with storage, available in multiple designs</p>
+            <div class="product-price">
+              <span class="price">₹8,000</span>
+              <span class="price-note">onwards</span>
+            </div>
+            <button class="book-btn" onclick="openOrderForm('TV Unit / Cabinet', '₹8,000')">
+              🛒 Book Now
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card featured" id="interior">
+          <div class="product-icon">🏠</div>
+          <div class="product-info">
+            <h3>Complete Home Interior</h3>
+            <p class="product-desc">End-to-end home interior solutions: kitchen, bedroom, living & more</p>
+            <div class="product-price">
+              <span class="price">Custom</span>
+              <span class="price-note">quote</span>
+            </div>
+            <button class="book-btn interior-btn" onclick="openInteriorForm()">
+              📋 Get Free Quote
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== ORDER FORM MODAL ===== -->
+    <div id="orderModal" class="modal-overlay" onclick="closeModal(event)">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeOrderModal()">✕</button>
+        <div class="modal-header">
+          <span class="modal-icon">🛒</span>
+          <h2>Book Your Order</h2>
+        </div>
+        <div class="selected-product-tag">
+          <strong id="selectedProduct">Product</strong>
+          <span id="selectedPrice" class="product-price-tag"></span>
+        </div>
+        <form onsubmit="submitOrder(event)" id="orderFormEl">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="name" placeholder="Apna naam likhein" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="phone" placeholder="10-digit mobile number" required autocomplete="tel" maxlength="10"
+              pattern="[0-9]{10}">
+          </div>
+          <div class="form-group">
+            <label>Delivery Address *</label>
+            <textarea id="address" placeholder="Full delivery address likhein" required rows="3"
+              autocomplete="street-address"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Special Request (Optional)</label>
+            <input type="text" id="special" placeholder="e.g. Color preference, size, etc.">
+          </div>
+          <button type="submit" class="submit-btn">
+            📲 Send Order on WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== INTERIOR FORM MODAL ===== -->
+    <div id="interiorModal" class="modal-overlay" onclick="closeInteriorModalBg(event)">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeInteriorModal()">✕</button>
+        <div class="modal-header">
+          <span class="modal-icon">🏠</span>
+          <h2>Home Interior Quote</h2>
+        </div>
+        <p class="modal-sub">Apni zaroorat batayein – free consultation milegi!</p>
+        <form onsubmit="submitInterior(event)" id="interiorFormEl">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="iname" placeholder="Apna naam likhein" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="iphone" placeholder="10-digit mobile number" required maxlength="10"
+              pattern="[0-9]{10}">
+          </div>
+          <div class="form-group">
+            <label>Select Work Required *</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" value="Modular Kitchen"> 🍳 Modular Kitchen</label>
+              <label class="checkbox-item"><input type="checkbox" value="Bedroom Interior"> 🛏️ Bedroom
+                Interior</label>
+              <label class="checkbox-item"><input type="checkbox" value="Living Room"> 🛋️ Living Room</label>
+              <label class="checkbox-item"><input type="checkbox" value="False Ceiling"> ✨ False Ceiling</label>
+              <label class="checkbox-item"><input type="checkbox" value="Wardrobes"> 🪟 Wardrobes</label>
+              <label class="checkbox-item"><input type="checkbox" value="TV Unit"> 📺 TV Unit</label>
+              <label class="checkbox-item"><input type="checkbox" value="Full Home Interior"> 🏠 Full Home
+                Interior</label>
+              <label class="checkbox-item"><input type="checkbox" value="Other Work"> 🔨 Other Work</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>City / Location *</label>
+            <input type="text" id="icity" placeholder="Apna sheher likhein" required>
+          </div>
+          <button type="submit" class="submit-btn interior-submit">
+            📲 Send Request on WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="contact-section" id="contact">
+      <div class="contact-inner">
+        <h2>Contact Us</h2>
+        <p class="contact-sub">Hume call karein ya WhatsApp karein – hamesha ready hain!</p>
+        <div class="contact-cards">
+          <a href="tel:7518909344" class="contact-card">
+            <span class="contact-card-icon">📞</span>
+            <div>
+              <strong>Call Us</strong>
+              <p>7518909344</p>
+            </div>
+          </a>
+          <a href="mailto:vivek2088888@gmail.com" class="contact-card">
+            <span class="contact-card-icon">✉️</span>
+            <div>
+              <strong>Email Us</strong>
+              <p>vivek2088888@gmail.com</p>
+            </div>
+          </a>
+          <a href="https://wa.me/917518909344" target="_blank" class="contact-card whatsapp-card">
+            <span class="contact-card-icon">💬</span>
+            <div>
+              <strong>WhatsApp</strong>
+              <p>Chat Now</p>
+            </div>
+          </a>
+        </div>
+        <p class="address">📍 Ashok Interior & Construction, India</p>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <img src="logo.png" alt="Logo" class="footer-logo">
+        <p>© 2025 Ashok Interior & Construction. All rights reserved.</p>
+        <p>Made with ❤️ for quality homes</p>
+      </div>
+    </footer>
+
+    <script>
+      // ===== MENU TOGGLE =====
+      function toggleMenu() {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.toggle('open');
+      }
+
+      // ===== ORDER FORM =====
+      let currentProduct = '';
+      let currentPrice = '';
+
+      function openOrderForm(productName, price) {
+        currentProduct = productName;
+        currentPrice = price;
+        document.getElementById('selectedProduct').textContent = productName;
+        document.getElementById('selectedPrice').textContent = price;
+        document.getElementById('orderFormEl').reset();
+        document.getElementById('orderModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeOrderModal() {
+        document.getElementById('orderModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function closeModal(event) {
+        if (event.target.id === 'orderModal') closeOrderModal();
+      }
+
+      function submitOrder(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const special = document.getElementById('special').value.trim();
+
+        if (phone.length !== 10) {
+          alert('Please enter a valid 10-digit mobile number');
+          return;
+        }
+
+        let message =
+          '🛒 *New Furniture Order*%0A%0A' +
+          '📦 *Product:* ' + currentProduct + '%0A' +
+          '💰 *Price:* ' + currentPrice + '%0A' +
+          '👤 *Name:* ' + name + '%0A' +
+          '📞 *Phone:* ' + phone + '%0A' +
+          '📍 *Address:* ' + address;
+
+        if (special) {
+          message += '%0A💬 *Special Request:* ' + special;
+        }
+
+        window.open('https://wa.me/917518909344?text=' + message, '_blank');
+        closeOrderModal();
+
+        setTimeout(function () {
+          window.location.href = 'thankyou.html';
+        }, 1000);
+      }
+
+      // ===== INTERIOR FORM =====
+      function openInteriorForm() {
+        document.getElementById('interiorFormEl').reset();
+        document.getElementById('interiorModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeInteriorModal() {
+        document.getElementById('interiorModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function closeInteriorModalBg(event) {
+        if (event.target.id === 'interiorModal') closeInteriorModal();
+      }
+
+      function submitInterior(e) {
+        e.preventDefault();
+        const name = document.getElementById('iname').value.trim();
+        const phone = document.getElementById('iphone').value.trim();
+        const city = document.getElementById('icity').value.trim();
+
+        let selected = [];
+        document.querySelectorAll('#interiorFormEl input[type="checkbox"]:checked')
+          .forEach(cb => selected.push(cb.value));
+
+        if (selected.length === 0) {
+          alert('Please select at least one type of work');
+          return;
+        }
+
+        if (phone.length !== 10) {
+          alert('Please enter a valid 10-digit mobile number');
+          return;
+        }
+
+        const message =
+          '🏠 *Home Interior Request*%0A%0A' +
+          '👤 *Name:* ' + name + '%0A' +
+          '📞 *Phone:* ' + phone + '%0A' +
+          '📍 *City:* ' + city + '%0A' +
+          '🔨 *Work Required:* ' + selected.join(', ') + '%0A%0A' +
+          '_(Please attach your house plan photo/PDF if available)_';
+
+        window.open('https://wa.me/917518909344?text=' + message, '_blank');
+        closeInteriorModal();
+
+        setTimeout(function () {
+          window.location.href = 'thankyou.html';
+        }, 1000);
+      }
+
+      // ===== SMOOTH SCROLL =====
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    </script>
+
 </body>
+
 </html>
